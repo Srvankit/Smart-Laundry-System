@@ -7,13 +7,11 @@
 - Real-time order tracking (Firebase Firestore)
 - IoT machine simulation (ESP32-ready logic)
 
-![Demo Screenshot](assets/screenshot.png)
 
 ---
 
 ## Live demo
-- If hosted: `https://your-username.github.io/smart-laundry-system/`  
-- Or Firebase hosting: `https://smart-laundry-system-d845c.web.app` (if you deployed)
+- https://smart-laundry-system-d845c.web.app
 
 ---
 
@@ -50,7 +48,7 @@ smart-laundry-system/
 ## Quick start (run locally)
 1. Clone the repo:
 ```bash
-git clone https://github.com/<yourusername>/Smart-Laundry-System.git
+git clone https://github.com/Srvankit/Smart-Laundry-System.git
 cd Smart-Laundry-System
 ```
 
@@ -70,4 +68,4 @@ python -m http.server 5500
 ---
 
 ## License
-MIT © Your Name
+MIT © Smart-Laundry-System
