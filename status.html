@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Laundry - Status</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Machine Simulation Box */
+    .iot-box {
+      background: rgba(15, 30, 55, 0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 18px;
+      border-radius: 16px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .iot-status {
+      font-size: 18px;
+      margin: 14px 0;
+      background: rgba(0,0,0,0.4);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0,150,255,0.25);
+    }
+
+    .machine-animation {
+      font-size: 58px;
+      margin: 16px 0;
+      animation: spin 2s linear infinite;
+      opacity: 0.5;
+      display: none;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body data-page="step3">
+
+<div class="top-bar">
+  <div class="logo">Smart<span class="blue">Laundry</span></div>
+  <div class="step-label">Step 3 of 4 · Live Status</div>
+</div>
+
+<div class="card">
+
+  <h1 id="statusTitle">Loading…</h1>
+  <p class="subtitle">
+    Live tracking of your order, machine state, and locker pickup.
+  </p>
+
+  <!-- Status Steps -->
+  <div class="status-chips">
+    <span id="chip-created">Created</span>
+    <span id="chip-paid">Paid</span>
+    <span id="chip-washing">Washing</span>
+    <span id="chip-ready">Ready</span>
+    <span id="chip-collected">Collected</span>
+  </div>
+
+  <!-- Timeline -->
+  <div id="timeline" class="timeline"></div>
+
+  <!-- Machine Simulation -->
+  <div class="iot-box">
+    <h3>Machine Simulation</h3>
+
+    <div id="iotStatus" class="iot-status">🛑 Machine Idle</div>
+    <div id="machineAnimation" class="machine-animation">🌀</div>
+
+    <button id="simulateMachine" class="main-btn" style="margin-top:10px;">
+      Simulate Machine Reaction
+    </button>
+  </div>
+
+  <!-- Locker Info -->
+  <div class="summary-box" style="margin-top:20px;">
+    <h3>Locker & Pickup Details</h3>
+    <p id="lockerLine">Fetching locker assignment…</p>
+    <small style="opacity:0.7;">
+      Use this locker and pickup code when your status becomes <b>Ready</b>.
+    </small>
+  </div>
+
+  <!-- Buttons -->
+  <div class="button-row">
+    <button id="btnStartFlow" class="main-btn">Start Auto Process →</button>
+  </div>
+
+  <div class="button-row">
+    <button id="btnStep3Next" class="nav-btn" disabled>Continue →</button>
+  </div>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSR5jzuTDZH_DrtHKJqXJ3O_Fn-1h2Jmc",
+    authDomain: "smart-laundry-system-d845c.firebaseapp.com",
+    projectId: "smart-laundry-system-d845c",
+    storageBucket: "smart-laundry-system-d845c.firebasestorage.app",
+    messagingSenderId: "24268926002",
+    appId: "1:24268926002:web:f917001215ed7d4749602b",
+    measurementId: "G-46M1H3VLBP"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  window.db = db;
+</script>
+
+<script type="module" src="main.js"></script>
+
+<!-- Locker info from localStorage -->
+<script>
+  (function () {
+    try {
+      const raw = localStorage.getItem("SmartLaundryOrder");
+      const el = document.getElementById("lockerLine");
+      if (!raw || !el) return;
+
+      const order = JSON.parse(raw);
+      if (order.locker && order.pickupCode) {
+        el.textContent = `Locker #${order.locker} · Pickup Code: ${order.pickupCode}`;
+      } else {
+        el.textContent = "Locker will be assigned after payment and locker step.";
+      }
+    } catch (e) {
+      // fail silently
+    }
+  })();
+</script>
+
+</body>
+</html>

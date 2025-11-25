@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Laundry - Order</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="step1">
+
+<div class="top-bar">
+  <div class="logo">Smart<span class="blue">Laundry</span></div>
+  <div class="step-label">Step 1 of 4 · Customer & Order</div>
+</div>
+
+<div class="card">
+
+  <h1>Customer & Order Details</h1>
+  <p class="subtitle">Start the smart laundry journey by capturing basic details and weight.</p>
+
+  <div class="form-grid">
+    <div>
+      <label>Customer Name</label>
+      <input id="custName" placeholder="e.g. Ankit Yadav">
+
+      <label>Phone</label>
+      <input id="custPhone" placeholder="e.g. 9876543210">
+
+      <label>Email (optional)</label>
+      <input id="custEmail" placeholder="e.g. you@example.com">
+    </div>
+
+    <div>
+      <label>Weight (kg)</label>
+      <div class="row">
+        <input id="weightInput" placeholder="Click 'Simulate IoT Weight'" readonly>
+        <button id="btnSimWeight" class="small-btn">Simulate IoT Weight</button>
+      </div>
+      <small class="hint">Later this will be replaced with live IoT sensor data.</small>
+
+      <label>Price (₹)</label>
+      <input id="priceInput" placeholder="Auto-calculated" readonly>
+      <small class="hint">Currently using fixed rate per kg – configurable in code.</small>
+    </div>
+  </div>
+
+  <p class="note">No data is permanent yet. This step just collects and prepares your order.</p>
+
+  <div class="button-row">
+    <button id="btnStep1Next" class="main-btn">Proceed to Payment & QR →</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+  // ⬇⬇⬇ PASTE YOUR CONFIG HERE ⬇⬇⬇
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSR5jzuTDZH_DrtHKJqXJ3O_Fn-1h2Jmc",
+    authDomain: "smart-laundry-system-d845c.firebaseapp.com",
+    projectId: "smart-laundry-system-d845c",
+    storageBucket: "smart-laundry-system-d845c.firebasestorage.app",
+    messagingSenderId: "24268926002",
+    appId: "1:24268926002:web:f917001215ed7d4749602b",
+    measurementId: "G-46M1H3VLBP"
+  };
+
+  // ⬇⬇ Initialize Firebase ⬇⬇
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  // Make Firestore globally available to main.js
+  window.db = db;
+</script>
+
+<script type="module" src="main.js"></script>
+
+</body>
+</html>

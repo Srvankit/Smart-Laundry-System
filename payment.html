@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Laundry - Payment</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="step2">
+
+<div class="top-bar">
+  <div class="logo">Smart<span class="blue">Laundry</span></div>
+  <div class="step-label">Step 2 of 4 · Payment</div>
+</div>
+
+<div class="card">
+
+  <h1>Payment</h1>
+  <p class="subtitle">Scan & Pay using UPI — then optionally verify with blockchain.</p>
+
+  <!-- ORDER SUMMARY -->
+  <div id="orderSummary" class="summary-box"></div>
+
+  <!-- UPI SECTION -->
+  <h3 class="section-title">UPI Payment</h3>
+
+  <div class="qr-section">
+    <div id="qrContainer"></div>
+    <pre id="qrPayloadPreview" class="qr-text"></pre>
+  </div>
+
+  <small style="opacity:0.6; display:block; margin-top:6px;">
+    Supports: PhonePe, Google Pay, Paytm & all UPI apps.
+  </small>
+
+  <hr style="margin:25px 0; border-color: rgba(255,255,255,0.15)">
+
+  <!-- BLOCKCHAIN SECTION -->
+  <h3 class="section-title">Blockchain Security (Optional)</h3>
+  <p class="subtitle">Connect your Aptos wallet to generate a tamper-proof payment proof.</p>
+
+  <!-- WALLET CONNECT BUTTON -->
+  <div class="button-row" style="justify-content:flex-start;">
+    <button id="btnConnectWallet" class="main-btn" style="background:#7b38ff;">
+      Connect Petra Wallet 🔗
+    </button>
+  </div>
+
+  <!-- BLOCKCHAIN PAY BUTTON -->
+  <div class="button-row" style="justify-content:flex-start;">
+    <button id="btnPayWithAptos" class="main-btn" style="background:#02f5a4;" disabled>
+      Pay with Aptos 💰
+    </button>
+  </div>
+
+  <small style="opacity:0.6; display:block; margin-top:4px;">
+    Works with Petra Wallet · Aptos Testnet
+  </small>
+
+  <!-- Manual TX HASH ENTRY (FALLBACK) -->
+  <label class="form-label" style="margin-top:20px;">Manual Aptos Transaction Hash (Optional)</label>
+  <input id="aptosTxHash" class="input-field" placeholder="0xA9213d928sd..." />
+
+  <div class="button-row">
+    <button id="btnVerifyOnChain" class="nav-btn">Verify Manually</button>
+  </div>
+
+  <!-- CONTINUE NEXT PAGE -->
+  <div class="button-row">
+    <button id="btnStep2Next" class="main-btn">Continue →</button>
+  </div>
+
+</div>
+
+<!-- QR Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- APTOS PETRA WALLET SDK -->
+<script src="https://unpkg.com/aptos@latest/dist/web/aptos.min.js"></script>
+
+<!-- FIREBASE -->
+<script type="module" src="firebase-init.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSR5jzuTDZH_DrtHKJqXJ3O_Fn-1h2Jmc",
+    authDomain: "smart-laundry-system-d845c.firebaseapp.com",
+    projectId: "smart-laundry-system-d845c",
+    storageBucket: "smart-laundry-system-d845c.firebasestorage.app",
+    messagingSenderId: "24268926002",
+    appId: "1:24268926002:web:f917001215ed7d4749602b",
+    measurementId: "G-46M1H3VLBP"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  window.db = db;
+</script>
+
+<!-- MAIN LOGIC -->
+<script type="module">
+  import "./main.js";
+
+  // Override navigation target to locker page
+  document.getElementById("btnStep2Next").onclick = () => {
+    window.location.href = "locker.html";
+  };
+</script>
+
+</body>
+</html>

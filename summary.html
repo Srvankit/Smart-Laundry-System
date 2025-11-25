@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Laundry - Summary</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="step4">
+
+<div class="top-bar">
+  <div class="logo">Smart<span class="blue">Laundry</span></div>
+  <div class="step-label">Step 4 of 4 · Summary</div>
+</div>
+
+<div class="card">
+
+  <h1>Order Summary</h1>
+  <p class="subtitle">Here’s a complete breakdown of the session.</p>
+
+  <p><strong>Order ID:</strong> <span id="summaryOrderId"></span></p>
+  <p><strong>Status:</strong> <span id="summaryStatus"></span></p>
+  <p><strong>Total Price:</strong> <span id="summaryPrice"></span></p>
+
+  <div id="summaryTimeline" class="timeline"></div>
+
+  <div class="button-row">
+    <button id="btnNewOrder" class="main-btn">Start New Order↺</button>
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+  // ⬇⬇⬇ PASTE YOUR CONFIG HERE ⬇⬇⬇
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSR5jzuTDZH_DrtHKJqXJ3O_Fn-1h2Jmc",
+    authDomain: "smart-laundry-system-d845c.firebaseapp.com",
+    projectId: "smart-laundry-system-d845c",
+    storageBucket: "smart-laundry-system-d845c.firebasestorage.app",
+    messagingSenderId: "24268926002",
+    appId: "1:24268926002:web:f917001215ed7d4749602b",
+    measurementId: "G-46M1H3VLBP"
+  };
+
+  // ⬇⬇ Initialize Firebase ⬇⬇
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const analytics = getAnalytics(app);
+
+  // Make Firestore globally available to main.js
+  window.db = db;
+</script>
+
+<script type="module" src="main.js"></script>
+
+</body>
+</html>
